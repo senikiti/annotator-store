@@ -6,10 +6,10 @@ MAPPING = {
     'annotator_schema_version': {'type': 'string'},
     'created': {'type': 'date'},
     'updated': {'type': 'date'},
-    'quote': {'type': 'string', 'analyzer': 'standard'},
+    'quote': {'type': 'string'},
     'tag': {'type': 'string'},
     'tags': {'type': 'string', 'copy_to': 'tag'},
-    'text': {'type': 'string', 'analyzer': 'standard'},
+    'text': {'type': 'string'},
     'uri': {'type': 'string'},
     'user': {'type': 'string'},
     'consumer': {'type': 'string'},
@@ -18,8 +18,8 @@ MAPPING = {
         'properties': {
             'start': {'type': 'string', 'copy_to': 'range'},
             'end': {'type': 'string', 'copy_to': 'range'},
-            'startOffset': {'type': 'integer', 'copy_to': 'range'},
-            'endOffset': {'type': 'integer', 'copy_to': 'range'},
+            'startOffset': {'type': 'long', 'copy_to': 'range'},
+            'endOffset': {'type': 'long', 'copy_to': 'range'},
         }
     },
     'permission': {'type': 'string'},
