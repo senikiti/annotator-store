@@ -24,6 +24,10 @@ from annotator import es, annotation, auth, authz, document, store
 from tests.helpers import MockUser, MockConsumer, MockAuthenticator
 from tests.helpers import mock_authorizer
 
+import ssl
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('/path/to/server.crt', '/path/to/server.key')
+
 logging.basicConfig(format='%(asctime)s %(process)d %(name)s [%(levelname)s] '
                            '%(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S',
@@ -108,7 +112,7 @@ def main(argv):
 
     host = os.environ.get('HOST', '127.0.0.1')
     port = int(os.environ.get('PORT', 5000))
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, debug = True, ssl_context=context)
 
 if __name__ == '__main__':
     main(sys.argv)
