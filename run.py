@@ -25,8 +25,6 @@ from tests.helpers import MockUser, MockConsumer, MockAuthenticator
 from tests.helpers import mock_authorizer
 
 import ssl
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-context.load_cert_chain('/path/to/server.crt', '/path/to/server.key')
 
 logging.basicConfig(format='%(asctime)s %(process)d %(name)s [%(levelname)s] '
                            '%(message)s',
@@ -55,6 +53,10 @@ def main(argv):
         print("Perhaps copy annotator.cfg.example to annotator.cfg",
               file=sys.stderr)
         sys.exit(1)
+
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    if app.config.get('SSL_CERTIFICATE_PATH') is not None and app.config.get('PRIVATE_KEY_PATH') is not None:
+    	context.load_cert_chain(app.config.get('SSL_CERTIFICATE_PATH'), app.config.get('PRIVATE_KEY_PATH'))
 
     if app.config.get('ELASTICSEARCH_HOST') is not None:
         es.host = app.config['ELASTICSEARCH_HOST']
@@ -112,6 +114,13 @@ def main(argv):
 
     host = os.environ.get('HOST', '127.0.0.1')
     port = int(os.environ.get('PORT', 5000))
+
+    # Override env variable values with config values
+    if app.config.get('ANNOTATOR_HOST') is not None:
+	host = app.config.get('ANNOTATOR_HOST')
+    if app.config.get('ANNOTATOR_PORT') is not None:
+	port = app.config.get('ANNOTATOR_PORT')
+
     app.run(host=host, port=port, debug = True, ssl_context=context)
 
 if __name__ == '__main__':
