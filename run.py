@@ -54,9 +54,9 @@ def main(argv):
               file=sys.stderr)
         sys.exit(1)
 
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    if app.config.get('SSL_CERTIFICATE_PATH') is not None and app.config.get('PRIVATE_KEY_PATH') is not None:
-    	context.load_cert_chain(app.config.get('SSL_CERTIFICATE_PATH'), app.config.get('PRIVATE_KEY_PATH'))
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    # if app.config.get('SSL_CERTIFICATE_PATH') is not None and app.config.get('PRIVATE_KEY_PATH') is not None:
+    #	context.load_cert_chain(app.config.get('SSL_CERTIFICATE_PATH'), app.config.get('PRIVATE_KEY_PATH'))
 
     if app.config.get('ELASTICSEARCH_HOST') is not None:
         es.host = app.config['ELASTICSEARCH_HOST']
@@ -121,7 +121,8 @@ def main(argv):
     if app.config.get('ANNOTATOR_PORT') is not None:
 	port = app.config.get('ANNOTATOR_PORT')
 
-    app.run(host=host, port=port, debug = True, ssl_context=context)
+    # app.run(host=host, port=port, debug = True, ssl_context=context)
+    app.run(host=host, port=port, debug = True)
 
 if __name__ == '__main__':
     main(sys.argv)

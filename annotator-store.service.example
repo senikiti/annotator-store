@@ -1,0 +1,9 @@
+[Unit]
+Description=Annotator Store daemon
+After=syslog.target network.target auditd.service
+[Service]
+Environment="HOST='annotator-store.inno-w.com'"
+Environment="PORT=443"
+ExecStart=/path/to/annotator-store/source_annotator.sh /path/to/annotator-store/run.py
+[Install]
+WantedBy=multi-user.target

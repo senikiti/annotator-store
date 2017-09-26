@@ -1,2 +1,5 @@
 #!/bin/bash
-source /home/sn/annotator-store-es2x/annotator-store/pyenv/bin/activate
+export VIRTUAL_ENV=/path/to/annotator-store/pyenv
+export PATH=$VIRTUAL_ENV/bin:$PATH
+unset PYTHONHOME
+exec "${@:-$SHELL}"
